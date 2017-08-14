@@ -3,10 +3,10 @@
 const mongoose = require('mongoose');
 
 const eventSchema = mongoose.Schema({
-  dateTime: {type: Date, required: true},
-  duration: {type: String, required: true},
-  allDay: {type: Boolean},
   name: {type: String, required: true},
+  allDay: {type: Boolean},
+  startDateTime: {type: Date, required: true},
+  endDateTime: {type: Date, required: true},
   type: {type: String, required: true},
   tag: {type: String},
   notify: {type: Boolean},

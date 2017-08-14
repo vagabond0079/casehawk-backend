@@ -25,10 +25,10 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
   console.log('Hit POST /api/events');
   console.log('timezoneOffset', timezoneOffset);
   new Event({
-    dateTime: moment.parseZone(req.body.dateTime + `-${timeZone(timezoneOffset)}`),
-    duration: req.body.duration,
-    allDay: req.body.allDay,
     name: req.body.name,
+    allDay: req.body.allDay,
+    startDateTime: moment.parseZone(req.body.startDateTime + `-${timeZone(timezoneOffset)}`),
+    endDateTime: moment.parseZone(req.body.endDateTime + `-${timeZone(timezoneOffset)}`),
     type: req.body.type,
     tag: req.body.tag,
     notify: req.body.notify,
