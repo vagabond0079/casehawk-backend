@@ -12,20 +12,27 @@ const basicAuth = require('../lib/basic-auth-middleware.js');
 
 // module logic
 const userRouter = module.exports = new Router();
+const daysToMilliseconds = (days) => days * 1000 * 60 * 60 * 24;
 
 // /api/signup
 userRouter.post('/api/signup', jsonParser, (req, res, next) => {
   console.log('Hit POST /api/signup');
   User.create(req.body)
     .then(token => {
-      res.send(token);})
+      res.cookie('X-Casehawk-Token', token, {maxAge: 900000});
+      res.send(token);
+    })
     .catch(next);
 });
 
 userRouter.get('/api/signin', basicAuth, (req, res, next) => {
   console.log('Hit GET /api/signin');
   req.user.tokenCreate()
-    .then(token => res.send(token))
+    .then(token => {
+      let cookieOptions = {maxAge: daysToMilliseconds(7)};
+      res.cookie('X-Casehawk-Token', token, cookieOptions);
+      res.send(token);
+    })
     .catch(next);
 });
 
