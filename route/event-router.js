@@ -12,13 +12,20 @@ const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 // module logic
 const eventRouter = module.exports = new Router();
+const timezoneOffset = (new Date().getTimezoneOffset())/60;
+const timeZone = (timezoneOffset) => {
+  if(timezoneOffset < 10)
+    return `0${timezoneOffset}:00`;
+  if(timezoneOffset > 9)
+    return `${timezoneOffset}:00`;
+};
 
 // /api/events
 eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
   console.log('Hit POST /api/events');
-
+  console.log('timezoneOffset', timezoneOffset);
   new Event({
-    dateTime: req.body.dateTime,
+    dateTime: moment.parseZone(req.body.dateTime + `-${timeZone(timezoneOffset)}`),
     duration: req.body.duration,
     allDay: req.body.allDay,
     name: req.body.name,
