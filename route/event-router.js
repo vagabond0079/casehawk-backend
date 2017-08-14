@@ -18,7 +18,14 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
   console.log('Hit POST /api/events');
 
   new Event({
-
+    dateTime: req.body.dateTime,
+    duration: req.body.duration,
+    allDay: req.body.allDay,
+    name: req.body.name,
+    type: req.body.type,
+    tag: req.body.tag,
+    notify: req.body.notify,
+    ownerId: req.user._id.toString(),
   })
     .save()
     .then(event => {
