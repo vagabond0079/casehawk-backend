@@ -25,10 +25,10 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
   console.log('Hit POST /api/events');
   console.log('timezoneOffset', timezoneOffset);
   new Event({
-    name: req.body.name,
+    title: req.body.title,
     allDay: req.body.allDay,
-    startDateTime: moment.parseZone(req.body.startDateTime + `-${timeZone(timezoneOffset)}`),
-    endDateTime: moment.parseZone(req.body.endDateTime + `-${timeZone(timezoneOffset)}`),
+    start: moment.parseZone(req.body.start + `-${timeZone(timezoneOffset)}`),
+    end: moment.parseZone(req.body.end + `-${timeZone(timezoneOffset)}`),
     eventType: req.body.eventType,
     tag: req.body.tag,
     notify: req.body.notify,
@@ -39,11 +39,18 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
       res.json(event);})
     .catch(next);
 });
-//
+
 eventRouter.get('/api/events/:id', (req, res, next) => {
   console.log('Hit GET /api/events/:id');
   Event.findById(req.params.id)
     .then(event => res.json(event))
+    .catch(next);
+});
+
+eventRouter.get('/api/events/', (req, res, next) => {
+  console.log('Hit GET /api/events/');
+  Event.find({})
+    .then(events => res.json(events))
     .catch(next);
 });
 
