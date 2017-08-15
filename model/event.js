@@ -7,7 +7,7 @@ const eventSchema = mongoose.Schema({
   allDay: {type: Boolean},
   startDateTime: {type: Date, required: true},
   endDateTime: {type: Date, required: true},
-  type: {type: String, required: true},
+  eventType: {type: String, required: true},
   tag: {type: String},
   notify: {type: Boolean},
   ownerId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user'},
