@@ -29,7 +29,7 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
     allDay: req.body.allDay,
     startDateTime: moment.parseZone(req.body.startDateTime + `-${timeZone(timezoneOffset)}`),
     endDateTime: moment.parseZone(req.body.endDateTime + `-${timeZone(timezoneOffset)}`),
-    type: req.body.type,
+    eventType: req.body.eventType,
     tag: req.body.tag,
     notify: req.body.notify,
     ownerId: req.user._id.toString(),
