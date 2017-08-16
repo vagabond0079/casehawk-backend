@@ -27,8 +27,8 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
   new Event({
     title: req.body.title,
     allDay: req.body.allDay,
-    start: moment.parseZone(req.body.start + `-${timeZone(timezoneOffset)}`),
-    end: moment.parseZone(req.body.end + `-${timeZone(timezoneOffset)}`),
+    start: req.body.start,
+    end: req.body.end,
     eventType: req.body.eventType,
     tag: req.body.tag,
     notify: req.body.notify,
@@ -65,7 +65,9 @@ eventRouter.put('/api/events/:id', bearerAuth, jsonParser, (req, res, next) => {
   Event.findById(req.params.id)
     .then(event => {
       Event.findByIdAndUpdate(req.params.id, req.body, options)
-        .then(event => res.json(event))
+        .then(event => {
+          res.json(event);
+        })
         .catch(next);
     })
     .catch(next);
