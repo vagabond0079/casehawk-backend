@@ -15,7 +15,7 @@ const mockEvent = require('./lib/mock-event.js');
 
 const API_URL = process.env.API_URL;
 
-describe('Testing Day model', () => {
+describe('Testing Event model', () => {
   let tempUserData;
 
   before(server.start);
@@ -29,6 +29,7 @@ describe('Testing Day model', () => {
 
   describe('Testing POST', () => {
     it('should return a event and a 200 status', () => {
+      console.log(tempUserData);
       return superagent
         .post(`${API_URL}/api/events`)
         .set('Authorization', `Bearer ${tempUserData.token}`)
@@ -40,15 +41,14 @@ describe('Testing Day model', () => {
         })
         .then(res => {
           expect(res.status).toEqual(200);
-        });
-    });
-    it('should respond with a 400 status for an improperly formatted attach', () => {
-      return superagent
-        .post(`${API_URL}/api/events`)
-        .set('Authorization', `Bearer ${tempUserData.token}`)
-        .field('date', 'not-a-date')
-        .catch(res => {
-          expect(res.status).toEqual(400);
+          expect(res.body.title).toEqual('mock-event');
+          expect(res.body.start).toEqual('2017-08-17T00:03:41.000Z');
+          expect(res.body.end).toEqual('2017-08-17T02:03:41.000Z');
+          expect(res.body.eventType).toEqual('appointment');
+          expect(res.body.allDay).toEqual(undefined);
+          expect(res.body.notify).toEqual(undefined);
+          expect(res.body.tag).toEqual(undefined);
+          expect(res.body.ownerId).toEqual(tempUserData.user._id);
         });
     });
     it('should respond with a 400 if no body provided', () => {
@@ -64,7 +64,12 @@ describe('Testing Day model', () => {
       return superagent
         .post(`${API_URL}/api/events`)
         .set('Authorization', `Bearer ${tempUserData.token}`)
-        .send({})
+        .send({
+          title: 'mock-event',
+          start: 'Wed Aug 16 2017 17:03:41 GMT-0700 (PDT)',
+          end: 'Wed Aug 16 2017 19:03:41 GMT-0700 (PDT)',
+          eventType: {},
+        })
         .catch(res => {
           expect(res.status).toEqual(400);
         });
