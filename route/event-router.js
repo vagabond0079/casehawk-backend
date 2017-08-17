@@ -2,7 +2,7 @@
 
 // npm modules
 const moment = require('moment');
-const {Router} = require('express');
+const { Router } = require('express');
 const jsonParser = require('body-parser').json();
 
 // app modules
@@ -11,13 +11,11 @@ const basicAuth = require('../lib/basic-auth-middleware.js');
 const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 // module logic
-const eventRouter = module.exports = new Router();
-const timezoneOffset = (new Date().getTimezoneOffset())/60;
-const timeZone = (timezoneOffset) => {
-  if(timezoneOffset < 10)
-    return `0${timezoneOffset}:00`;
-  if(timezoneOffset > 9)
-    return `${timezoneOffset}:00`;
+const eventRouter = (module.exports = new Router());
+const timezoneOffset = new Date().getTimezoneOffset() / 60;
+const timeZone = timezoneOffset => {
+  if (timezoneOffset < 10) return `0${timezoneOffset}:00`;
+  if (timezoneOffset > 9) return `${timezoneOffset}:00`;
 };
 
 // /api/events
@@ -38,22 +36,18 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
     .then(event => {
       console.log('POST event req', req.body);
       console.log('POST event res', event);
-      res.json(event);})
+      res.json(event);
+    })
     .catch(next);
 });
 
 eventRouter.get('/api/events/:id', (req, res, next) => {
   console.log('Hit GET /api/events/:id');
-  Event.findById(req.params.id)
-    .then(event => res.json(event))
-    .catch(next);
+  Event.findById(req.params.id).then(event => res.json(event)).catch(next);
 });
 
 eventRouter.get('/api/events/', (req, res, next) => {
-  console.log('Hit GET /api/events/');
-  Event.find({})
-    .then(events => res.json(events))
-    .catch(next);
+  Event.find({}).then(events => res.json(events)).catch(next);
 });
 
 eventRouter.put('/api/events/:id', bearerAuth, jsonParser, (req, res, next) => {
@@ -79,7 +73,7 @@ eventRouter.delete('/api/events/:id', bearerAuth, (req, res, next) => {
   console.log('Hit DELETE /api/events/:id');
   Event.findById(req.params.id)
     .then(event => {
-      if (req.user._id.toString() !== event.ownerId.toString()){
+      if (req.user._id.toString() !== event.ownerId.toString()) {
         throw Error('Unauthorized - cannot change another users resource');
       }
       return event;
