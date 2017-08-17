@@ -71,7 +71,7 @@ describe('Testing User model', () => {
         });
     });
   });
-  describe.only('Testing GET /api/signin', () => {
+  describe('Testing GET /api/signin', () => {
     it('should return a token and a 200 status', () => {
       let tempUser;
       return mockUser
