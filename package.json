@@ -1,7 +1,7 @@
 {
-	"name": "Casehawk API",
+	"name": "Neighbster-API",
 	"version": "1.0.0",
-	"description": "A backend application (API) for Casehawk that will allow users to create, read, update, and delete calendar events.",
+	"description": "A backend application (API) that will allow people to create to-do items.",
 	"main": "index.js",
 	"directories": {
 		"test": "test"
@@ -13,14 +13,14 @@
 		"stop-db": "killall mongod",
 		"lint": "eslint ."
 	},
-	"repository": "git+https://github.com/vagabond0079/casehawk-backend.git",
+	"repository": "git+https://github.com/Saulgreene/Neighbster-API.git",
 	"keywords": [],
 	"author": "derekcfarmer <derek.farmer@gmail.com>",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/vagabond0079/casehawk-backend/issues"
+		"url": "https://github.com/Saulgreene/Neighbster-API/issues"
 	},
-	"homepage": "https://github.com/vagabond0079/casehawk-backend#readme",
+	"homepage": "https://github.com/Saulgreene/Neighbster-API#readme",
 	"dependencies": {
 		"aws-sdk": "^2.82.0",
 		"bcrypt": "^1.0.2",
