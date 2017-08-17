@@ -7,7 +7,6 @@ require('dotenv').config({ path: `${__dirname}/../.test.env` });
 const expect = require('expect');
 const superagent = require('superagent');
 
-require('./lib/mock-aws.js');
 const server = require('../lib/server.js');
 
 const API_URL = process.env.API_URL;

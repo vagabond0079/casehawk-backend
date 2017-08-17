@@ -7,7 +7,6 @@ require('dotenv').config({ path: `${__dirname}/../.test.env` });
 const expect = require('expect');
 const superagent = require('superagent');
 
-require('./lib/mock-aws.js');
 const User = require('../model/user.js');
 const server = require('../lib/server.js');
 const clearDB = require('./lib/clear-db.js');
