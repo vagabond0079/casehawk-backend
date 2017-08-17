@@ -81,11 +81,23 @@ describe('Testing Event model', () => {
         .get(`${API_URL}/api/events/${tempUserData.event._id}`)
         .then(res => {
           expect(res.status).toEqual(200);
+          expect(tempUserData.event.title).toEqual('mock-event');
+          expect(tempUserData.event.allDay).toEqual(null);
+          expect(tempUserData.event.start).toEqual(
+            'Wed Aug 16 2017 17:03:41 GMT-0700 (PDT)'
+          );
+          expect(tempUserData.event.end).toEqual(
+            'Wed Aug 16 2017 19:03:41 GMT-0700 (PDT)'
+          );
+          expect(tempUserData.event.eventType).toEqual('appointment');
+          expect(tempUserData.event.tag).toEqual(null);
+          expect(tempUserData.event.notify).toEqual(null);
         });
     });
     it('should respond with status 404 for event.id not found', () => {
-      return superagent.get(`${API_URL}/api/events/not-an-id`).catch(res => {
+      return superagent.get(`${API_URL}/api/events/notAnId`).catch(res => {
         expect(res.status).toEqual(404);
+        expect(tempUserData.event.notAnId).toBe(undefined);
       });
     });
   });
@@ -97,6 +109,17 @@ describe('Testing Event model', () => {
         .send({})
         .then(res => {
           expect(res.status).toEqual(200);
+          expect(tempUserData.event.title).toEqual('mock-event');
+          expect(tempUserData.event.allDay).toEqual(null);
+          expect(tempUserData.event.start).toEqual(
+            'Wed Aug 16 2017 17:03:41 GMT-0700 (PDT)'
+          );
+          expect(tempUserData.event.end).toEqual(
+            'Wed Aug 16 2017 19:03:41 GMT-0700 (PDT)'
+          );
+          expect(tempUserData.event.eventType).toEqual('appointment');
+          expect(tempUserData.event.tag).toEqual(null);
+          expect(tempUserData.event.notify).toEqual(null);
         });
     });
     it('should respond with a 400 if no body provided', () => {
@@ -138,7 +161,7 @@ describe('Testing Event model', () => {
       return superagent
         .put(`${API_URL}/api/events/${tempUserData.event._id}`)
         .set('Authorization', `Bearer ${tempUserData.token}`)
-        .send({})
+        .send({ title: '' })
         .then(res => {
           throw res;
         })
