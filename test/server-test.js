@@ -47,7 +47,7 @@ describe('testing error-handler 500 response', () => {
   after(server.stop);
   describe('Testing Error-Handler', () => {
     it('should return 500 for server error', done => {
-      superagent.get(`${API_URL}/api/500test`).end((err, res) => {
+      superagent.get(`${API_URL}/api/500tesst`).end((err, res) => {
         expect(res.status).toEqual(500);
         done();
       });
