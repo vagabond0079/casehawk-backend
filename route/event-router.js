@@ -36,6 +36,8 @@ eventRouter.post('/api/events', bearerAuth, jsonParser, (req, res, next) => {
   })
     .save()
     .then(event => {
+      console.log('POST event req', req.body);
+      console.log('POST event res', event);
       res.json(event);})
     .catch(next);
 });
