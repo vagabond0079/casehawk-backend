@@ -20,7 +20,7 @@ userRouter.post('/api/signup', jsonParser, (req, res, next) => {
   User.create(req.body)
     .then(token => {
       let cookieOptions = {maxAge: daysToMilliseconds(7)};
-      res.cookie('X-Casehawk-Token', token);
+      res.cookie('X-Casehawk-Token', token, cookieOptions);
       res.send(token);
     })
     .catch(next);
@@ -31,7 +31,7 @@ userRouter.get('/api/signin', basicAuth, (req, res, next) => {
   req.user.tokenCreate()
     .then(token => {
       let cookieOptions = {maxAge: daysToMilliseconds(7)};
-      res.cookie('X-Casehawk-Token', token);
+      res.cookie('X-Casehawk-Token', token, cookieOptions);
       res.send(token);
     })
     .catch(next);
