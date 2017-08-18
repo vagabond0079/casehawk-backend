@@ -16,12 +16,12 @@ const daysToMilliseconds = days => days * 1000 * 60 * 60 * 24;
 // /api/signup
 userRouter.post('/api/signup', jsonParser, (req, res, next) => {
   console.log('Hit POST /api/signup');
+  console.log('req.body', req.body);
   User.create(req.body)
     .then(token => {
       let cookieOptions = { maxAge: daysToMilliseconds(7) };
       res.cookie('X-Casehawk-Token', token);
       res.send(token);
-      console.log('document.cookie', document.cookie);
     })
     .catch(next);
 });
