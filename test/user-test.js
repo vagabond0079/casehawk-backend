@@ -27,6 +27,7 @@ describe('Testing User model', () => {
   describe('Testing POST', () => {
     it('should return a token and a 200 status', () => {
       return superagent.post(`${API_URL}/api/signup`).send(data).then(res => {
+        console.log('res.body', res.body);
         expect(res.status).toEqual(200);
         expect(res.text).toExist();
         expect(res.text.length > 1).toBeTruthy();
